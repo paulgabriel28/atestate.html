@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Atestate 2023</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+    <link rel="stylesheet" href="style_atestate.css">
+
+</head>
+
+<body>
+    <main>
+        <div class="title-atestate" style="font-family: 'Courier New', Courier, monospace;">
+            <br>
+            <h1 >Atestate 2023</h1>
+            Apasa pe un buton pentru a copia in clipboard atestatul dorit!
+            <div style="color: red; font-size:small">* Nu se recomanda fraudarea unor examene / teste cu ajutorul
+                acestui site! :)</div>
+                <br>
+            <a href="subiecte_atestate"><button>Subiecte</button></a>
+            <br><br>
+        </div>
+        <br>
+        <script>
+            const text_Copyright = document.createElement("div");
+            text_Copyright.innerHTML = '<p style="color: white;">Copyright @ <a href="https://www.paulgabriel.ro/" style="color: black;">paulgabriel</a></p>';
+            const atestateText_afisare = [
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("suma.in");
+    int cifre_pare(int x)
+    {
+        int s = 0, ok = 0;
+        do
+        {
+            if (x % 2 == 0)
+            {
+                ok = 1;
+                s = s + x % 10;
+            }
+            x = x / 10;
+        } while (x > 0);
+        if (ok != 0)
+            return s;
+        return -1;
+    }
+    int main()
+    {
+        int n, nr, i, smax = -1, nr_p = -1, s;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> nr;
+            s = cifre_pare(nr);
+            if (smax < s)
+            {
+                smax = s;
+                nr_p = nr;
+            }
+        }
+        if (smax == -1)
+            cout << "doar cifre impare";
+        else
+            cout << smax << ' ' << nr_p;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("grade.in");
+    int a[100][100], n;
+    int suma_x(int n, int a[][100], int x)
+    {
+        int s = 0, i;
+        for (i = 1; i <= n; i++)
+            s = s + a[x][i];
+        return s;
+    }
+    int main()
+    {
+        int i, j, gradmax = 0, c = 0;
+        fin >> n;
+        while (fin >> i >> j)
+            a[i][j] = a[j][i] = 1;
+        for (i = 1; i <= n; i++)
+        {
+            int gm = suma_x(n, a, i);
+            if (gm > gradmax)
+                gradmax = gm;
+        }
+        for (i = 1; i <= n; i++)
+            if (suma_x(n, a, i) == gradmax)
+                cout << i << ' ';
+        cout << endl;
+        for (i = 1; i <= n; i++)
+            if (suma_x(n, a, i) == 0)
+            {
+                cout << i << ' ';
+                c = 1;
+            }
+        if (c == 0)
+            cout << "nu exista";
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ofstream fout("control.out");
+    int gaseste_cifra(int x, int c)
+    {
+        int ap = 0;
+        do
+        {
+            if (x % 10 == c)
+                ap++;
+            x = x / 10;
+        } while (x > 0);
+        return ap;
+    }
+    int main()
+    {
+        int nr;
+        long long nou = 0;
+        int i, s = 0;
+        cin >> nr;
+        for (i = 0; i <= 9; i++)
+            nou = nou * 10 + gaseste_cifra(nr, i);
+        fout << nou << endl;
+        if (nr == 0)
+            fout << 0;
+        else if (nr % 9 == 0)
+            fout << 9;
+        else
+            fout << nr % 9;
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cstring&gt;
+    using namespace std;
+    ifstream fin("cuvinte.in");
+    ofstream fout("cuvinte.out");
+    void puncte(char *cuv, int n)
+    {
+        char p[21] = "....................", nou[41];
+        strcpy(nou, cuv);
+        strncat(nou, p, n);
+        cout << nou;
+    }
+    int main()
+    {
+        char s[111], *cuv;
+        int ok = 0;
+        fin.get(s, 111);
+        cuv = strtok(s, " ");
+        while (cuv)
+        {
+            if (strchr(cuv, '-') != 0 && strchr("aeiou-", cuv[0]) == 0)
+            {
+                fout << cuv << ' ';
+                ok = 1;
+            }
+            puncte(cuv, strlen(cuv));
+            cout << endl;
+            cuv = strtok(NULL, " ");
+        }
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("matrice.in");
+    int v[101][101];
+    int nrpare_p(int n, int v[][101])
+    {
+        int pare = 0, i;
+        for (i = 1; i <= n; i++)
+            if (v[i][i] % 2 == 0)
+                pare++;
+        if (pare)
+            return pare;
+        return -1;
+    }
+    int nrpare_s(int n, int v[][101])
+    {
+        int pare = 0, i;
+        for (i = 1; i <= n; i++)
+            if (v[i][n + 1 - i] % 2 == 0)
+                pare++;
+        if (pare)
+            return pare;
+        return -1;
+    }
+    int main()
+    {
+        int n, i, j;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+            for (j = 1; j <= n; j++)
+                fin >> v[i][j];
+        if (nrpare_p(n, v) != -1 && nrpare_s(n, v) != -1)
+            cout << 2 * n - nrpare_p(n, v) - nrpare_s(n, v);
+        else
+            cout << "nu exista";
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("graf.in");
+    int a[100][100], n;
+    int linie_x(int n, int a[][100], int x)
+    {
+        int c = 0, i;
+        for (i = 1; i <= n; i++)
+            if (a[x][i] != 0)
+                c++;
+        return c;
+    }
+    int coloana_x(int n, int a[][100], int x)
+    {
+        int c = 0, i;
+        for (i = 1; i <= n; i++)
+            if (a[i][x] != 0)
+                c++;
+        return c;
+    }
+    int main()
+    {
+        int i, j, s = 0, c = 0;
+        fin >> n;
+        while (fin >> i >> j)
+            a[i][j] = 1;
+        for (i = 1; i <= n; i++)
+            if (linie_x(n, a, i) == coloana_x(n, a, i))
+            {
+                cout << i << ' ';
+                c = 1;
+            }
+        if (c == 0)
+            cout << "nu exista";
+        cout << endl;
+        for (i = 1; i <= n; i++)
+            s = s + coloana_x(n, a, i);
+        cout << s;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ofstream fout("mat.out");
+    int a[40][40];
+    int main()
+    {
+        int i, j, n;
+        cin >> n;
+        for (i = 0; i < n; i++)
+            for (j = 0; j < n; j++)
+            {
+                if (i % 2 == 0)
+                    a[i][j] = j % 3;
+                else
+                    a[i][j] = (n - j - 1) % 3;
+            }
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+                fout << a[i][j] << ' ';
+            fout << endl;
+        }
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("numere.in");
+    int nr_prim(int n)
+    {
+        int d;
+        if (n < 2)
+            return 0;
+        if (n == 2)
+            return 1;
+        if (n % 2 == 0)
+            return 0;
+        for (d = 3; d * d <= n; d = d + 2)
+            if (n % d == 0)
+                return 0;
+        return 1;
+    }
+    int cmmdc(int n, int m)
+    {
+        int r;
+        while (m != 0)
+        {
+            r = n % m;
+            n = m;
+            m = r;
+        }
+        return n;
+    }
+    int main()
+    {
+        int n, m, nrp = 0;
+        fin >> n;
+        while (fin >> m)
+        {
+            if (!nr_prim(n) && !nr_prim(m) && cmmdc(n, m) == 1)
+                nrp++;
+            n = m;
+        }
+        cout << nrp;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ofstream fout("palindrom.out");
+    int oglinda(int x)
+    {
+        int ogl = 0;
+        while (x > 0)
+        {
+            ogl = ogl * 10 + x % 10;
+            x = x / 10;
+        }
+        return ogl;
+    }
+    int main()
+    {
+        int a, b, i, k;
+        int ok = 0;
+        cin >> a;
+        cin >> b;
+        for (i = a; i <= b; i++)
+        {
+            if (oglinda(i) == i)
+                fout << i << ' ';
+        }
+        fout << endl;
+        cin >> k;
+        if (oglinda(k) == k)
+            fout << "palindrom";
+        else
+            while (ok == 0)
+            {
+                k++;
+                if (oglinda(k) == k)
+                {
+                    fout << k;
+                    ok = 1;
+                }
+            }
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("sir.in");
+    ofstream fout("sir.out");
+    int n, v[100], ok;
+    int main()
+    {
+        int i, x;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> x;
+            if (x > 9 && x < 100)
+                v[x]++;
+        }
+        for (i = 10; i <= 99; i++)
+            if (v[i] == 0)
+            {
+                fout << i << ' ';
+                ok = 1;
+            }
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cstring&gt;
+    using namespace std;
+    ifstream fin("vocale.in");
+    ofstream fout("vocale.out");
+    void vocale(char *s, int &v)
+    {
+        int i;
+        v = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (strchr("aeiouAEIOU", s[i]) != 0)
+                v++;
+    }
+    int main()
+    {
+        char s[81], *cuv;
+        int ok = 0, nrvoc, nrcuv = 0;
+        fin.get(s, 81);
+        cuv = strtok(s, " ");
+        while (cuv)
+        {
+            vocale(cuv, nrvoc);
+            if (nrvoc == strlen(cuv))
+                nrcuv++;
+            if (strstr(cuv, "str") != 0)
+            {
+                fout << cuv << endl;
+                ok = 1;
+            }
+            cuv = strtok(NULL, " ");
+        }
+        cout << nrcuv;
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("perfect.in");
+    int perfect(int x)
+    {
+        int d = 1, nr = 0, s = 0;
+        while (d * d < x)
+        {
+            if (x % d == 0)
+                s = s + d + x / d;
+            d++;
+        }
+        if (d * d == x)
+            s = s + d;
+        return (s == 2 * x);
+    }
+    int main()
+    {
+        int p = 0, pmax = 0;
+        int nr, maxim = 0;
+        while (fin >> nr)
+        {
+            p++;
+            if (perfect(nr) == 1 && maxim < nr)
+            {
+                maxim = nr;
+                pmax = p;
+            }
+        }
+        if (maxim == 0)
+            cout << "imposibil";
+        else
+            cout << maxim << ' ' << pmax;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cmath&gt;
+    using namespace std;
+    ifstream fin("arbore.in");
+    int n, i, tata[100], maxf = 0, v[100];
+    int pozitie(int n, int v[], int x)
+    {
+        int i;
+        for (i = 1; i <= n; i++)
+            if (v[i] == x)
+                return i;
+        return -1;
+    }
+    int main()
+    {
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> tata[i];
+            v[tata[i]]++;
+            if (v[tata[i]] > maxf)
+                maxf = v[tata[i]];
+        }
+        cout << pozitie(n, tata, 0) << endl;
+        for (i = 1; i <= n; i++)
+            if (v[i] == maxf)
+                cout << i << ' ';
+        cout << endl;
+        for (i = 1; i <= n; i++)
+            if (pozitie(n, tata, i) == -1)
+                cout << i << ' ';
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("secventa_k.in");
+    int poz[101];
+    int v[101], n;
+    void secv_tablou(int n, int v[], int a, int b)
+    {
+        int i;
+        for (i = a; i <= b; i++)
+            cout << v[i] << ' ';
+    }
+    int main()
+    {
+        int k, i, j = 1, i1, i2;
+        cin >> k;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> v[i];
+            if (v[i] == k)
+                poz[j++] = i;
+        }
+        j--;
+        if (j > 1)
+        {
+            for (i1 = 1; i1 < j; i1++)
+                for (i2 = i1 + 1; i2 <= j; i2++)
+                {
+                    secv_tablou(n, v, poz[i1], poz[i2]);
+                    cout << endl;
+                }
+        }
+        else
+            cout << "imposibil";
+        fin.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cstring&gt;
+    using namespace std;
+    ifstream fin("consoane.in");
+    ofstream fout("consoane.out");
+    int consoane(char *s)
+    {
+        int i, c = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (strchr("aeiouAEIOU", s[i]) == 0)
+                c++;
+        return c;
+    }
+    int main()
+    {
+        char s[91], *cuv;
+        int ok = 0, nrcons, nrmaxcons = 0;
+        fin.get(s, 91);
+        cuv = strtok(s, " ");
+        while (cuv)
+        {
+            nrcons = consoane(cuv);
+            if (nrcons > nrmaxcons)
+                nrmaxcons = nrcons;
+            if (strlen(cuv) % 2 == 0 && cuv[0] >= 'A' && cuv[0] <= 'Z')
+            {
+                fout << cuv << endl;
+                ok = 1;
+            }
+            cuv = strtok(NULL, " ");
+        }
+        cout << nrmaxcons;
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("divizori.in");
+    int nr_div(int a)
+    {
+        int d = 2, nr = 0;
+        while (d * d < a)
+        {
+            if (a % d == 0)
+                nr = nr + 2;
+            d++;
+        }
+        if (d * d == a)
+            nr++;
+        return nr;
+    }
+    int main()
+    {
+        int a, max_nrdiv = 0, max_a;
+        while (fin >> a)
+        {
+            int nd = nr_div(a);
+            if (nd >= max_nrdiv)
+            {
+                max_nrdiv = nd;
+                max_a = a;
+            }
+        }
+        cout << max_a;
+        fin.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("clipa.in");
+    struct clipa
+    {
+        int sec, mi, ora;
+    } cmax;
+    void timp(clipa c)
+    {
+        if (c.ora <= 9)
+            cout << '0' << c.ora << ':';
+        else
+            cout << c.ora << ':';
+        if (c.mi <= 9)
+            cout << '0' << c.mi << ':';
+        else
+            cout << c.mi << ':';
+        if (c.sec <= 9)
+            cout << '0' << c.sec;
+        else
+            cout << c.sec;
+        cout << endl;
+    }
+    int main()
+    {
+        int n, i;
+        clipa c;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> c.sec >> c.mi >> c.ora;
+            timp(c);
+            if (c.ora > cmax.ora || (c.ora == cmax.ora && c.mi > cmax.mi))
+                cmax = c;
+            else if (c.ora == cmax.ora && c.mi == cmax.mi && c.sec > cmax.sec)
+                cmax = c;
+        }
+        timp(cmax);
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cmath&gt;
+    using namespace std;
+    ifstream fin("puncte.in");
+    struct punct
+    {
+        float x, y;
+    } p[100], orig;
+    float distanta(punct A, punct B)
+    {
+        return sqrt((A.x - B.x) * (A.x - B.x) + (A.y - B.y) * (A.y - B.y));
+    }
+    int main()
+    {
+        int n, i, j, c = 0;
+        float r;
+        fin >> r >> n;
+        for (i = 1; i <= n; i++)
+            fin >> p[i].x >> p[i].y;
+        for (i = 1; i <= n; i++)
+            if (distanta(orig, p[i]) == r)
+            {
+                cout << '(' << p[i].x << ',' << p[i].y << ')' << endl;
+                c = 1;
+            }
+        if (c == 0)
+            cout << "nu exista";
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("numere.in");
+    ofstream fout("numere.out");
+    int main()
+    {
+        int max1, max2, nrmax1, nrmax2, n;
+        fin >> n;
+        max1 = n;
+        nrmax1 = 1;
+        max2 = n;
+        nrmax2 = 1;
+        while (fin >> n)
+        {
+            if (max1 < n)
+            {
+                max2 = max1;
+                max1 = n;
+                nrmax2 = nrmax1;
+                nrmax2 = 1;
+            }
+            else if (max1 == n)
+                nrmax1++;
+            else if (max2 == n)
+                nrmax2++;
+            else if (max2 < n)
+            {
+                max2 = n;
+                nrmax2 = 1;
+            }
+        }
+        if (max1 == max2)
+            fout << "numere identice";
+        else
+        {
+            fout << max1 << ' ' << nrmax1 << endl;
+            fout << max2 << ' ' << nrmax2;
+        }
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cstring&gt;
+    using namespace std;
+    ifstream fin("cifra.in");
+    ofstream fout("cifra.out");
+    int cifre(char *s)
+    {
+        int i, c = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (s[i] >= '0' && s[i] <= '9')
+                c++;
+        return c;
+    }
+    int main()
+    {
+        char s[101], *cuv;
+        int ok = 0;
+        fin.get(s, 101);
+        cuv = strtok(s, " ,");
+        while (cuv)
+        {
+            if (cifre(cuv) > 0)
+            {
+                fout << cuv << ' ';
+                ok = 1;
+            }
+            if (cuv[0] >= 'a')
+                cuv[0] = cuv[0] - 32;
+            cout << cuv << endl;
+            cuv = strtok(0, " ,");
+        }
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cmath&gt;
+    using namespace std;
+    ofstream fout("patrate.out");
+    int nr_div(int a)
+    {
+        int d, nr = 0;
+        for (d = 1; d * d < a; d++)
+            if (a % d == 0)
+                nr = nr + 2;
+        if (d * d == a)
+            nr++;
+        return nr;
+    }
+    int main()
+    {
+        int a, ok = 0;
+        do
+        {
+            cin >> a;
+            if (nr_div(a) == 3)
+            {
+                ok = 1;
+                fout << sqrt(a) << ' ';
+            }
+        } while (a != 1);
+        if (!ok)
+            fout << "nu exista";
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ofstream fout("comune.out");
+    int na, nb, k, a[100], b[100], c[100];
+    void tablou(int &n, int v[])
+    {
+        int i;
+        cin >> n;
+        for (i = 0; i < n; i++)
+            cin >> v[i];
+    }
+    int main()
+    {
+        int i, j;
+        tablou(na, a);
+        tablou(nb, b);
+        i = 0;
+        j = nb - 1;
+        while (i < na && j >= 0)
+            if (a[i] == b[j])
+            {
+                c[k] = a[i];
+                i++;
+                j--;
+                k++;
+            }
+            else if (a[i] < b[j])
+                i++;
+            else
+                j--;
+        if (k == 0)
+            fout << "nu exista";
+        else
+            for (i = 0; i < k; i++)
+                fout << c[i] << ' ';
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("numere.in");
+    ofstream fout("numere.out");
+    int e_prim(int a)
+    {
+        int d;
+        if (a < 2)
+            return 0;
+        if (a % 2 == 0 && a > 2)
+            return 0;
+        for (d = 3; d * d <= a; d = d + 2)
+            if (a % d == 0)
+                return 0;
+        return 1;
+    }
+    int lgmax, nrsecv, primul;
+    int main()
+    {
+        int n, lg = 0;
+        while (fin >> n)
+        {
+            if (e_prim(n) == 1)
+            {
+                lg++;
+                if (lg > lgmax)
+                {
+                    lgmax = lg;
+                    nrsecv = 1;
+                }
+                else if (lg == lgmax)
+                    nrsecv++;
+            }
+            else
+                lg = 0;
+        }
+        if (nrsecv > 1)
+            fout << nrsecv;
+        else
+            fout << lgmax;
+        fin.close();
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    using namespace std;
+    ifstream fin("extrem.in");
+    int numar_cifre(int x)
+    {
+        int nrcif = 1;
+        while (x > 9)
+        {
+            nrcif++;
+            x = x / 10;
+        }
+        return nrcif;
+    }
+    int v1[] = {0, 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999};
+    int v2[] = {0, 0, 10, 100, 1000, 10000, 100000, 1000000, 10000000};
+    int main()
+    {
+        int n, p, nr, ok = 0;
+        while (fin >> n)
+        {
+            if (n % 2 == 0)
+                cout << n << ".." << v1[numar_cifre(n)];
+            else
+                cout << v2[numar_cifre(n)] << ".." << n;
+            cout << endl;
+        }
+        fin.close();
+        return 0;
+    }
+    `,
+                `
+    #include &lt;iostream&gt;
+    #include &lt;fstream&gt;
+    #include &lt;cstring&gt;
+    using namespace std;
+    ifstream fin("titlu.in");
+    ofstream fout("titlu.out");
+    int nr, ok;
+    int majuscule(char *s)
+    {
+        int i, maj = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (s[i] >= 'A' && s[i] <= 'Z')
+                maj++;
+        return maj;
+    }
+    int main()
+    {
+        char text[201], *titlu;
+        fin.get(text, 201);
+        titlu = strtok(text, "*");
+        while (titlu)
+        {
+            if (majuscule(titlu) == 2)
+                nr++;
+            if (strchr(titlu, 'M'))
+            {
+                fout << titlu << endl;
+                ok = 1;
+            }
+            titlu = strtok(NULL, "*");
+        }
+        cout << nr;
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`
+            ];
+
+            const atestateText = [
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("suma.in");
+    int cifre_pare(int x)
+    {
+        int s = 0, ok = 0;
+        do
+        {
+            if (x % 2 == 0)
+            {
+                ok = 1;
+                s = s + x % 10;
+            }
+            x = x / 10;
+        } while (x > 0);
+        if (ok != 0)
+            return s;
+        return -1;
+    }
+    int main()
+    {
+        int n, nr, i, smax = -1, nr_p = -1, s;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> nr;
+            s = cifre_pare(nr);
+            if (smax < s)
+            {
+                smax = s;
+                nr_p = nr;
+            }
+        }
+        if (smax == -1)
+            cout << "doar cifre impare";
+        else
+            cout << smax << ' ' << nr_p;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("grade.in");
+    int a[100][100], n;
+    int suma_x(int n, int a[][100], int x)
+    {
+        int s = 0, i;
+        for (i = 1; i <= n; i++)
+            s = s + a[x][i];
+        return s;
+    }
+    int main()
+    {
+        int i, j, gradmax = 0, c = 0;
+        fin >> n;
+        while (fin >> i >> j)
+            a[i][j] = a[j][i] = 1;
+        for (i = 1; i <= n; i++)
+        {
+            int gm = suma_x(n, a, i);
+            if (gm > gradmax)
+                gradmax = gm;
+        }
+        for (i = 1; i <= n; i++)
+            if (suma_x(n, a, i) == gradmax)
+                cout << i << ' ';
+        cout << endl;
+        for (i = 1; i <= n; i++)
+            if (suma_x(n, a, i) == 0)
+            {
+                cout << i << ' ';
+                c = 1;
+            }
+        if (c == 0)
+            cout << "nu exista";
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ofstream fout("control.out");
+    int gaseste_cifra(int x, int c)
+    {
+        int ap = 0;
+        do
+        {
+            if (x % 10 == c)
+                ap++;
+            x = x / 10;
+        } while (x > 0);
+        return ap;
+    }
+    int main()
+    {
+        int nr;
+        long long nou = 0;
+        int i, s = 0;
+        cin >> nr;
+        for (i = 0; i <= 9; i++)
+            nou = nou * 10 + gaseste_cifra(nr, i);
+        fout << nou << endl;
+        if (nr == 0)
+            fout << 0;
+        else if (nr % 9 == 0)
+            fout << 9;
+        else
+            fout << nr % 9;
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <string.h>
+    using namespace std;
+    ifstream fin("cuvinte.in");
+    ofstream fout("cuvinte.out");
+    void puncte(char *cuv, int n)
+    {
+        char p[21] = "....................", nou[41];
+        strcpy(nou, cuv);
+        strncat(nou, p, n);
+        cout << nou;
+    }
+    int main()
+    {
+        char s[111], *cuv;
+        int ok = 0;
+        fin.get(s, 111);
+        cuv = strtok(s, " ");
+        while (cuv)
+        {
+            if (strchr(cuv, '-') != 0 && strchr("aeiou-", cuv[0]) == 0)
+            {
+                fout << cuv << ' ';
+                ok = 1;
+            }
+            puncte(cuv, strlen(cuv));
+            cout << endl;
+            cuv = strtok(NULL, " ");
+        }
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("matrice.in");
+    int v[101][101];
+    int nrpare_p(int n, int v[][101])
+    {
+        int pare = 0, i;
+        for (i = 1; i <= n; i++)
+            if (v[i][i] % 2 == 0)
+                pare++;
+        if (pare)
+            return pare;
+        return -1;
+    }
+    int nrpare_s(int n, int v[][101])
+    {
+        int pare = 0, i;
+        for (i = 1; i <= n; i++)
+            if (v[i][n + 1 - i] % 2 == 0)
+                pare++;
+        if (pare)
+            return pare;
+        return -1;
+    }
+    int main()
+    {
+        int n, i, j;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+            for (j = 1; j <= n; j++)
+                fin >> v[i][j];
+        if (nrpare_p(n, v) != -1 && nrpare_s(n, v) != -1)
+            cout << 2 * n - nrpare_p(n, v) - nrpare_s(n, v);
+        else
+            cout << "nu exista";
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("graf.in");
+    int a[100][100], n;
+    int linie_x(int n, int a[][100], int x)
+    {
+        int c = 0, i;
+        for (i = 1; i <= n; i++)
+            if (a[x][i] != 0)
+                c++;
+        return c;
+    }
+    int coloana_x(int n, int a[][100], int x)
+    {
+        int c = 0, i;
+        for (i = 1; i <= n; i++)
+            if (a[i][x] != 0)
+                c++;
+        return c;
+    }
+    int main()
+    {
+        int i, j, s = 0, c = 0;
+        fin >> n;
+        while (fin >> i >> j)
+            a[i][j] = 1;
+        for (i = 1; i <= n; i++)
+            if (linie_x(n, a, i) == coloana_x(n, a, i))
+            {
+                cout << i << ' ';
+                c = 1;
+            }
+        if (c == 0)
+            cout << "nu exista";
+        cout << endl;
+        for (i = 1; i <= n; i++)
+            s = s + coloana_x(n, a, i);
+        cout << s;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ofstream fout("mat.out");
+    int a[40][40];
+    int main()
+    {
+        int i, j, n;
+        cin >> n;
+        for (i = 0; i < n; i++)
+            for (j = 0; j < n; j++)
+            {
+                if (i % 2 == 0)
+                    a[i][j] = j % 3;
+                else
+                    a[i][j] = (n - j - 1) % 3;
+            }
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+                fout << a[i][j] << ' ';
+            fout << endl;
+        }
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("numere.in");
+    int nr_prim(int n)
+    {
+        int d;
+        if (n < 2)
+            return 0;
+        if (n == 2)
+            return 1;
+        if (n % 2 == 0)
+            return 0;
+        for (d = 3; d * d <= n; d = d + 2)
+            if (n % d == 0)
+                return 0;
+        return 1;
+    }
+    int cmmdc(int n, int m)
+    {
+        int r;
+        while (m != 0)
+        {
+            r = n % m;
+            n = m;
+            m = r;
+        }
+        return n;
+    }
+    int main()
+    {
+        int n, m, nrp = 0;
+        fin >> n;
+        while (fin >> m)
+        {
+            if (!nr_prim(n) && !nr_prim(m) && cmmdc(n, m) == 1)
+                nrp++;
+            n = m;
+        }
+        cout << nrp;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ofstream fout("palindrom.out");
+    int oglinda(int x)
+    {
+        int ogl = 0;
+        while (x > 0)
+        {
+            ogl = ogl * 10 + x % 10;
+            x = x / 10;
+        }
+        return ogl;
+    }
+    int main()
+    {
+        int a, b, i, k;
+        int ok = 0;
+        cin >> a;
+        cin >> b;
+        for (i = a; i <= b; i++)
+        {
+            if (oglinda(i) == i)
+                fout << i << ' ';
+        }
+        fout << endl;
+        cin >> k;
+        if (oglinda(k) == k)
+            fout << "palindrom";
+        else
+            while (ok == 0)
+            {
+                k++;
+                if (oglinda(k) == k)
+                {
+                    fout << k;
+                    ok = 1;
+                }
+            }
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <fstream>
+    using namespace std;
+    ifstream fin("sir.in");
+    ofstream fout("sir.out");
+    int n, v[100], ok;
+    int main()
+    {
+        int i, x;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> x;
+            if (x > 9 && x < 100)
+                v[x]++;
+        }
+        for (i = 10; i <= 99; i++)
+            if (v[i] == 0)
+            {
+                fout << i << ' ';
+                ok = 1;
+            }
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <string.h>
+    using namespace std;
+    ifstream fin("vocale.in");
+    ofstream fout("vocale.out");
+    void vocale(char *s, int &v)
+    {
+        int i;
+        v = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (strchr("aeiouAEIOU", s[i]) != 0)
+                v++;
+    }
+    int main()
+    {
+        char s[81], *cuv;
+        int ok = 0, nrvoc, nrcuv = 0;
+        fin.get(s, 81);
+        cuv = strtok(s, " ");
+        while (cuv)
+        {
+            vocale(cuv, nrvoc);
+            if (nrvoc == strlen(cuv))
+                nrcuv++;
+            if (strstr(cuv, "str") != 0)
+            {
+                fout << cuv << endl;
+                ok = 1;
+            }
+            cuv = strtok(NULL, " ");
+        }
+        cout << nrcuv;
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("perfect.in");
+    int perfect(int x)
+    {
+        int d = 1, nr = 0, s = 0;
+        while (d * d < x)
+        {
+            if (x % d == 0)
+                s = s + d + x / d;
+            d++;
+        }
+        if (d * d == x)
+            s = s + d;
+        return (s == 2 * x);
+    }
+    int main()
+    {
+        int p = 0, pmax = 0;
+        int nr, maxim = 0;
+        while (fin >> nr)
+        {
+            p++;
+            if (perfect(nr) == 1 && maxim < nr)
+            {
+                maxim = nr;
+                pmax = p;
+            }
+        }
+        if (maxim == 0)
+            cout << "imposibil";
+        else
+            cout << maxim << ' ' << pmax;
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <cmath>
+    using namespace std;
+    ifstream fin("arbore.in");
+    int n, i, tata[100], maxf = 0, v[100];
+    int pozitie(int n, int v[], int x)
+    {
+        int i;
+        for (i = 1; i <= n; i++)
+            if (v[i] == x)
+                return i;
+        return -1;
+    }
+    int main()
+    {
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> tata[i];
+            v[tata[i]]++;
+            if (v[tata[i]] > maxf)
+                maxf = v[tata[i]];
+        }
+        cout << pozitie(n, tata, 0) << endl;
+        for (i = 1; i <= n; i++)
+            if (v[i] == maxf)
+                cout << i << ' ';
+        cout << endl;
+        for (i = 1; i <= n; i++)
+            if (pozitie(n, tata, i) == -1)
+                cout << i << ' ';
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("secventa_k.in");
+    int poz[101];
+    int v[101], n;
+    void secv_tablou(int n, int v[], int a, int b)
+    {
+        int i;
+        for (i = a; i <= b; i++)
+            cout << v[i] << ' ';
+    }
+    int main()
+    {
+        int k, i, j = 1, i1, i2;
+        cin >> k;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> v[i];
+            if (v[i] == k)
+                poz[j++] = i;
+        }
+        j--;
+        if (j > 1)
+        {
+            for (i1 = 1; i1 < j; i1++)
+                for (i2 = i1 + 1; i2 <= j; i2++)
+                {
+                    secv_tablou(n, v, poz[i1], poz[i2]);
+                    cout << endl;
+                }
+        }
+        else
+            cout << "imposibil";
+        fin.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <string.h>
+    using namespace std;
+    ifstream fin("consoane.in");
+    ofstream fout("consoane.out");
+    int consoane(char *s)
+    {
+        int i, c = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (strchr("aeiouAEIOU", s[i]) == 0)
+                c++;
+        return c;
+    }
+    int main()
+    {
+        char s[91], *cuv;
+        int ok = 0, nrcons, nrmaxcons = 0;
+        fin.get(s, 91);
+        cuv = strtok(s, " ");
+        while (cuv)
+        {
+            nrcons = consoane(cuv);
+            if (nrcons > nrmaxcons)
+                nrmaxcons = nrcons;
+            if (strlen(cuv) % 2 == 0 && cuv[0] >= 'A' && cuv[0] <= 'Z')
+            {
+                fout << cuv << endl;
+                ok = 1;
+            }
+            cuv = strtok(NULL, " ");
+        }
+        cout << nrmaxcons;
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("divizori.in");
+    int nr_div(int a)
+    {
+        int d = 2, nr = 0;
+        while (d * d < a)
+        {
+            if (a % d == 0)
+                nr = nr + 2;
+            d++;
+        }
+        if (d * d == a)
+            nr++;
+        return nr;
+    }
+    int main()
+    {
+        int a, max_nrdiv = 0, max_a;
+        while (fin >> a)
+        {
+            int nd = nr_div(a);
+            if (nd >= max_nrdiv)
+            {
+                max_nrdiv = nd;
+                max_a = a;
+            }
+        }
+        cout << max_a;
+        fin.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("clipa.in");
+    struct clipa
+    {
+        int sec, mi, ora;
+    } cmax;
+    void timp(clipa c)
+    {
+        if (c.ora <= 9)
+            cout << '0' << c.ora << ':';
+        else
+            cout << c.ora << ':';
+        if (c.mi <= 9)
+            cout << '0' << c.mi << ':';
+        else
+            cout << c.mi << ':';
+        if (c.sec <= 9)
+            cout << '0' << c.sec;
+        else
+            cout << c.sec;
+        cout << endl;
+    }
+    int main()
+    {
+        int n, i;
+        clipa c;
+        fin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            fin >> c.sec >> c.mi >> c.ora;
+            timp(c);
+            if (c.ora > cmax.ora || (c.ora == cmax.ora && c.mi > cmax.mi))
+                cmax = c;
+            else if (c.ora == cmax.ora && c.mi == cmax.mi && c.sec > cmax.sec)
+                cmax = c;
+        }
+        timp(cmax);
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <cmath>
+    using namespace std;
+    ifstream fin("puncte.in");
+    struct punct
+    {
+        float x, y;
+    } p[100], orig;
+    float distanta(punct A, punct B)
+    {
+        return sqrt((A.x - B.x) * (A.x - B.x) + (A.y - B.y) * (A.y - B.y));
+    }
+    int main()
+    {
+        int n, i, j, c = 0;
+        float r;
+        fin >> r >> n;
+        for (i = 1; i <= n; i++)
+            fin >> p[i].x >> p[i].y;
+        for (i = 1; i <= n; i++)
+            if (distanta(orig, p[i]) == r)
+            {
+                cout << '(' << p[i].x << ',' << p[i].y << ')' << endl;
+                c = 1;
+            }
+        if (c == 0)
+            cout << "nu exista";
+        fin.close();
+        return 0;
+    }`,
+                `
+    #include <fstream>
+    using namespace std;
+    ifstream fin("numere.in");
+    ofstream fout("numere.out");
+    int main()
+    {
+        int max1, max2, nrmax1, nrmax2, n;
+        fin >> n;
+        max1 = n;
+        nrmax1 = 1;
+        max2 = n;
+        nrmax2 = 1;
+        while (fin >> n)
+        {
+            if (max1 < n)
+            {
+                max2 = max1;
+                max1 = n;
+                nrmax2 = nrmax1;
+                nrmax2 = 1;
+            }
+            else if (max1 == n)
+                nrmax1++;
+            else if (max2 == n)
+                nrmax2++;
+            else if (max2 < n)
+            {
+                max2 = n;
+                nrmax2 = 1;
+            }
+        }
+        if (max1 == max2)
+            fout << "numere identice";
+        else
+        {
+            fout << max1 << ' ' << nrmax1 << endl;
+            fout << max2 << ' ' << nrmax2;
+        }
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <string.h>
+    using namespace std;
+    ifstream fin("cifra.in");
+    ofstream fout("cifra.out");
+    int cifre(char *s)
+    {
+        int i, c = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (s[i] >= '0' && s[i] <= '9')
+                c++;
+        return c;
+    }
+    int main()
+    {
+        char s[101], *cuv;
+        int ok = 0;
+        fin.get(s, 101);
+        cuv = strtok(s, " ,");
+        while (cuv)
+        {
+            if (cifre(cuv) > 0)
+            {
+                fout << cuv << ' ';
+                ok = 1;
+            }
+            if (cuv[0] >= 'a')
+                cuv[0] = cuv[0] - 32;
+            cout << cuv << endl;
+            cuv = strtok(0, " ,");
+        }
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <cmath>
+    using namespace std;
+    ofstream fout("patrate.out");
+    int nr_div(int a)
+    {
+        int d, nr = 0;
+        for (d = 1; d * d < a; d++)
+            if (a % d == 0)
+                nr = nr + 2;
+        if (d * d == a)
+            nr++;
+        return nr;
+    }
+    int main()
+    {
+        int a, ok = 0;
+        do
+        {
+            cin >> a;
+            if (nr_div(a) == 3)
+            {
+                ok = 1;
+                fout << sqrt(a) << ' ';
+            }
+        } while (a != 1);
+        if (!ok)
+            fout << "nu exista";
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ofstream fout("comune.out");
+    int na, nb, k, a[100], b[100], c[100];
+    void tablou(int &n, int v[])
+    {
+        int i;
+        cin >> n;
+        for (i = 0; i < n; i++)
+            cin >> v[i];
+    }
+    int main()
+    {
+        int i, j;
+        tablou(na, a);
+        tablou(nb, b);
+        i = 0;
+        j = nb - 1;
+        while (i < na && j >= 0)
+            if (a[i] == b[j])
+            {
+                c[k] = a[i];
+                i++;
+                j--;
+                k++;
+            }
+            else if (a[i] < b[j])
+                i++;
+            else
+                j--;
+        if (k == 0)
+            fout << "nu exista";
+        else
+            for (i = 0; i < k; i++)
+                fout << c[i] << ' ';
+        fout.close();
+        return 0;
+    }`,
+                `
+    #include <fstream>
+    using namespace std;
+    ifstream fin("numere.in");
+    ofstream fout("numere.out");
+    int e_prim(int a)
+    {
+        int d;
+        if (a < 2)
+            return 0;
+        if (a % 2 == 0 && a > 2)
+            return 0;
+        for (d = 3; d * d <= a; d = d + 2)
+            if (a % d == 0)
+                return 0;
+        return 1;
+    }
+    int lgmax, nrsecv, primul;
+    int main()
+    {
+        int n, lg = 0;
+        while (fin >> n)
+        {
+            if (e_prim(n) == 1)
+            {
+                lg++;
+                if (lg > lgmax)
+                {
+                    lgmax = lg;
+                    nrsecv = 1;
+                }
+                else if (lg == lgmax)
+                    nrsecv++;
+            }
+            else
+                lg = 0;
+        }
+        if (nrsecv > 1)
+            fout << nrsecv;
+        else
+            fout << lgmax;
+        fin.close();
+        fout.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    ifstream fin("extrem.in");
+    int numar_cifre(int x)
+    {
+        int nrcif = 1;
+        while (x > 9)
+        {
+            nrcif++;
+            x = x / 10;
+        }
+        return nrcif;
+    }
+    int v1[] = {0, 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999};
+    int v2[] = {0, 0, 10, 100, 1000, 10000, 100000, 1000000, 10000000};
+    int main()
+    {
+        int n, p, nr, ok = 0;
+        while (fin >> n)
+        {
+            if (n % 2 == 0)
+                cout << n << ".." << v1[numar_cifre(n)];
+            else
+                cout << v2[numar_cifre(n)] << ".." << n;
+            cout << endl;
+        }
+        fin.close();
+        return 0;
+    }
+    `,
+                `
+    #include <iostream>
+    #include <fstream>
+    #include <string.h>
+    using namespace std;
+    ifstream fin("titlu.in");
+    ofstream fout("titlu.out");
+    int nr, ok;
+    int majuscule(char *s)
+    {
+        int i, maj = 0;
+        for (i = 0; s[i] != NULL; i++)
+            if (s[i] >= 'A' && s[i] <= 'Z')
+                maj++;
+        return maj;
+    }
+    int main()
+    {
+        char text[201], *titlu;
+        fin.get(text, 201);
+        titlu = strtok(text, "*");
+        while (titlu)
+        {
+            if (majuscule(titlu) == 2)
+                nr++;
+            if (strchr(titlu, 'M'))
+            {
+                fout << titlu << endl;
+                ok = 1;
+            }
+            titlu = strtok(NULL, "*");
+        }
+        cout << nr;
+        if (ok == 0)
+            fout << "nu exista";
+        fin.close();
+        fout.close();
+        return 0;
+    }`
+            ];
+            const successMsg = document.createElement("div");
+            successMsg.classList.add("jq-toast-single", "jq-has-icon", "jq-icon-success");
+            successMsg.style.textAlign = "left";
+            successMsg.style.position = "fixed";
+            successMsg.style.bottom = "20px";
+            successMsg.style.right = "20px";
+            successMsg.style.display = "none";
+            successMsg.style.width = "150px";
+            successMsg.innerHTML = '<h2 class="jq-toast-heading" style="hover">Succes</h2>Atestatul a fost copiat in clipboard.';
+
+            document.body.appendChild(successMsg);
+
+
+            const errorMsg = document.createElement("div");
+            errorMsg.classList.add("jq-toast-single", "jq-has-icon", "jq-icon-error");
+            errorMsg.style.textAlign = "left";
+            errorMsg.style.position = "fixed";
+            errorMsg.style.bottom = "20px";
+            errorMsg.style.right = "20px";
+            errorMsg.style.display = "none";
+            errorMsg.style.width = "150px";
+            errorMsg.innerHTML = '<h2 class="jq-toast-heading">Eroare</h2>Textul nu a putut fi copiat in clipboard, incearca in alt browser.';
+
+            document.body.appendChild(errorMsg);
+
+            const card = document.createElement("div");
+            card.id = "card";
+            card.className = "card"
+
+            for (let i = 1; i <= 25; i++) {
+                const button = document.createElement("button");
+                button.id = "atestat" + i;
+                button.innerText = "Atestat " + i;
+                const text = atestateText[i - 1];
+                button.addEventListener("click", function () {
+                    const text = atestateText[i - 1];
+                    const text_afisare = atestateText_afisare[i-1];
+                    const title_card = "Atestat " + i;
+                    card.innerHTML = '<pre><code class="cpp"> //Subiectul ' + i + '<br>' + text_afisare + '</code></pre>';
+                    navigator.clipboard.writeText(unescape(text)).then(function () {
+                        console.log("Atestatul " + i + " a fost copiat!");
+                        successMsg.style.display = "block";
+                        setTimeout(function () {
+                            successMsg.style.display = "none";
+                        }, 3000);
+                    }, function (err) {
+                        console.error("Nu s-a putut copia Atestatul " + i, err);
+                        errorMsg.style.display = "block";
+                        setTimeout(function () {
+                            errorMsg.style.display = "none";
+                        }, 3000);
+                    });
+                });
+                document.body.appendChild(button);
+            }
+
+            document.body.appendChild(card);
+
+            document.body.appendChild(text_Copyright);
+            hljs.highlightBlock(document.querySelector('#card'));
+        </script>
+
+        <style>
+           
+            button {
+                background-color: white;
+                color: black;
+                border: 2px solid #32b7e7;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                border-radius: 14px;
+            }
+
+
+            button:hover {
+                background-color: #32b7e7;
+                color: white;
+            }
+
+            body {
+                background-color: #106989;
+                border: none;
+                border-radius: 15px;
+            }
+
+            p {
+                padding: 16px 32px;
+                font-size: 16px;
+                margin: 10px;
+            }
+
+            .title-atestate {
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+                color: #000;
+                text-align: center;
+                color: black;
+            }
+            pre {
+                border: none;
+                border-radius: 14px;
+            }
+
+        </style>
+
+    </main>
+</body>
+
+</html>
